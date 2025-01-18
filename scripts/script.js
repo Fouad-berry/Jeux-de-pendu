@@ -23,14 +23,17 @@ const resetGame = () => {
     .querySelectorAll("button")
     .forEach((btn) => (btn.disabled = false));
 
-  // On s'assure de masquer la popup
   gameModal.classList.remove("show");
 };
 
 const getRandomWord = () => {
-  const { word, hint } = wordList[Math.floor(Math.random() * wordList.length)];
-  currentWord = word;
-  document.querySelector(".hint-text b").innerText = hint;
+  let randomEntry = wordList[Math.floor(Math.random() * wordList.length)];
+  currentWord = randomEntry.word || randomEntry.mot;
+  if (!currentWord) {
+    console.error("Le mot est indéfini. Vérifiez votre wordList.");
+    return;
+  }
+  document.querySelector(".hint-text b").innerText = randomEntry.hint;
   resetGame();
 };
 
@@ -38,10 +41,8 @@ const gameOver = (isVictory) => {
   const modalText = isVictory ? `Vous avez trouvé le mot :` : "Le mot correct était :";
 
   gameModal.querySelector("img").src = `images/${isVictory ? "victory" : "lost"}.gif`;
-  
   gameModal.querySelector("h4").innerText = isVictory ? "Félicitations!" : "Jeu terminé!";
   gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
-  
   gameModal.classList.add("show");
 };
 
@@ -121,8 +122,8 @@ for (let i = 97; i <= 122; i++) {
 }
 
 playAgainBtn.addEventListener("click", () => {
-    gameModal.classList.remove("show");
-    getRandomWord();
-  });
-  
+  gameModal.classList.remove("show");
+  getRandomWord();
+});
+
 getRandomWord();
