@@ -90,11 +90,20 @@ body {
   padding: 7px;
   width: calc(100% / 9 - 5px);
 }
-.keyboard button[disabled] {
-  pointer-events: none;
-  opacity: 0.6;
-}
-:where(.game-modal, .keyboard) button:hover {
+.keyboard button.wrong[disabled] {
+    background-color: red;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .keyboard button.correct[disabled] {
+    background-color: green;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+ 
+ :where(.game-modal, .keyboard) button:hover {
   background: #8286c9;
 }
 .game-modal {

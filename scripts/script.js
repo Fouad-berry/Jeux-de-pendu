@@ -49,26 +49,30 @@ const gameOver = (isVictory) => {
 };
 
 const initGame = (button, clickedLetter) => {
-  if (currentWord.includes(clickedLetter)) {
-    [...currentWord].forEach((letter, index) => {
-      if (letter === clickedLetter) {
-        correctLetters.push(letter);
-        wordDisplay.querySelectorAll("li")[index].innerText = letter;
-        wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
-      }
-    });
-  } else {
-    wrongGuessCount++;
-    hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
-  }
-
-  button.disabled = true;
-  guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
-
-  if (wrongGuessCount === maxGuesses) return gameOver(false);
-  if (correctLetters.length === currentWord.length) return gameOver(true);
-};
-
+    if (currentWord.includes(clickedLetter)) {
+      button.classList.add("correct");
+  
+      [...currentWord].forEach((letter, index) => {
+        if (letter === clickedLetter) {
+          correctLetters.push(letter);
+          wordDisplay.querySelectorAll("li")[index].innerText = letter;
+          wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
+        }
+      });
+    } else {
+      button.classList.add("wrong");
+      wrongGuessCount++;
+      hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
+    }
+  
+    button.disabled = true;
+  
+    guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
+  
+    if (wrongGuessCount === maxGuesses) return gameOver(false);
+    if (correctLetters.length === currentWord.length) return gameOver(true);
+  };
+  
 for (let i = 97; i <= 122; i++) {
   const button = document.createElement("button");
   button.innerText = String.fromCharCode(i);
