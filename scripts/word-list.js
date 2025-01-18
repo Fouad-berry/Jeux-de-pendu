@@ -261,62 +261,162 @@ const wordList = [
         },
         {
             word: "littérature",
-            indice: "L'art de l'écrit, incluant la prose et la poésie."
+            hint: "L'art de l'écrit, incluant la prose et la poésie."
           },
           {
             word: "poésie",
-            indice: "Une forme d'expression littéraire privilégiant le rythme et l'image."
+            hint: "Une forme d'expression littéraire privilégiant le rythme et l'image."
           },
           {
             word: "musique",
-            indice: "L'art de combiner des sons et des silences de manière harmonieuse ou expressive."
+            hint: "L'art de combiner des sons et des silences de manière harmonieuse ou expressive."
           },
           {
             word: "ordinateur",
-            indice: "Un dispositif électronique capable de traiter et de stocker des informations."
+            hint: "Un dispositif électronique capable de traiter et de stocker des informations."
           },
           {
             word: "amitié",
-            indice: "Un sentiment d’affection ou de sympathie réciproque entre deux personnes."
+            hint: "Un sentiment d’affection ou de sympathie réciproque entre deux personnes."
           },
           {
             word: "maison",
-            indice: "Un bâtiment servant de lieu d’habitation."
+            hint: "Un bâtiment servant de lieu d’habitation."
           },
           {
             word: "rêve",
-            indice: "Une suite d’images et de sensations se produisant pendant le sommeil."
+            hint: "Une suite d’images et de sensations se produisant pendant le sommeil."
           },
           {
             word: "chimie",
-            indice: "La science qui étudie la composition, la structure et les propriétés de la matière."
+            hint: "La science qui étudie la composition, la structure et les propriétés de la matière."
           },
           {
             word: "électricité",
-            indice: "Une forme d'énergie liée au mouvement ou à la présence de charges électriques."
+            hint: "Une forme d'énergie liée au mouvement ou à la présence de charges électriques."
           },
           {
             word: "horloge",
-            indice: "Un instrument destiné à mesurer et à indiquer l'heure."
+            hint: "Un instrument destiné à mesurer et à indiquer l'heure."
           },
           {
             word: "automne",
-            indice: "La saison qui suit l’été et précède l’hiver, marquée par la chute des feuilles."
+            hint: "La saison qui suit l’été et précède l’hiver, marquée par la chute des feuilles."
           },
           {
             word: "étoile",
-            indice: "Un corps céleste qui brille par sa propre lumière, comme le Soleil."
+            hint: "Un corps céleste qui brille par sa propre lumière, comme le Soleil."
           },
           {
             word: "satellite",
-            indice: "Un objet naturel ou artificiel en orbite autour d’une planète."
+            hint: "Un objet naturel ou artificiel en orbite autour d’une planète."
           },
           {
             word: "comète",
-            indice: "Un petit corps céleste constitué de glace et de poussière, laissant parfois une traînée lumineuse dans le ciel."
+            hint: "Un petit corps céleste constitué de glace et de poussière, laissant parfois une traînée lumineuse dans le ciel."
           },
           {
             word: "océan",
-            indice: "Une vaste étendue d’eau salée couvrant la majeure partie de la surface terrestre."
+            hint: "Une vaste étendue d’eau salée couvrant la majeure partie de la surface terrestre."
+          },
+          {
+            word: "Zeus",
+            hint: "Le roi des dieux dans la mythologie grecque, dieu du ciel et de la foudre."
+          },
+          {
+            word: "Héra",
+            hint: "Épouse de Zeus, déesse du mariage et de la famille."
+          },
+          {
+            word: "Poséidon",
+            hint: "Dieu des mers et des océans, frère de Zeus."
+          },
+          {
+            word: "Athéna",
+            hint: "Déesse de la sagesse, de la stratégie guerrière et des arts."
+          },
+          {
+            word: "Arès",
+            hint: "Dieu de la guerre, réputé pour son caractère violent."
+          },
+          {
+            word: "Aphrodite",
+            hint: "Déesse de l’amour et de la beauté."
+          },
+          {
+            word: "Hadès",
+            hint: "Dieu des Enfers et souverain du monde des morts."
+          },
+          {
+            word: "Hermès",
+            hint: "Messager des dieux, dieu du commerce, des voyageurs et des voleurs."
+          },
+          {
+            word: "Artémis",
+            hint: "Déesse de la chasse, de la nature sauvage et de la Lune."
+          },
+          {
+            word: "Dionysos",
+            hint: "Dieu du vin, de la fête et du théâtre."
+          },
+          {
+            mot: "Naruto",
+            hint: "L’histoire d’un ninja déterminé à devenir Hokage dans son village."
+          },
+          {
+            mot: "One Piece",
+            hint: "Un équipage de pirates en quête du trésor légendaire laissé par Gol D. Roger."
+          },
+          {
+            mot: "Dragon Ball",
+            hint: "Des combattants protégeant la Terre, cherchant des boules magiques exauçant les vœux."
+          },
+          {
+            mot: "Death Note",
+            hint: "Un cahier surnaturel qui provoque la mort de ceux dont le nom y est inscrit."
+          },
+          {
+            mot: "Sailor Moon",
+            hint: "Des guerrières protégeant la Terre grâce aux pouvoirs lunaires."
+          },
+          {
+            mot: "Fullmetal Alchemist",
+            hint: "Deux frères alchimistes en quête de la pierre philosophale pour retrouver leurs corps."
+          },
+          {
+            mot: "Bleach",
+            hint: "Un lycéen obtient des pouvoirs de shinigami pour combattre les esprits maléfiques."
+          },
+          {
+            mot: "Hunter x Hunter",
+            hint: "Un jeune garçon part à l’aventure pour devenir Hunter et retrouver son père."
+          },
+          {
+            mot: "Attack on Titan",
+            hint: "Des humains luttent contre des Titans mangeurs d’hommes, enfermés derrière de hautes murailles."
+          },
+          {
+            mot: "My Hero Academia",
+            hint: "Dans un monde où presque tout le monde possède un Alter, un jeune garçon rêve de devenir un super-héros."
+          },
+          {
+            mot: "Jujutsu Kaisen",
+            hint: "Des exorcistes combattent des Fléaux, des créatures nées des émotions négatives de l’humanité."
+          },
+          {
+            mot: "Demon Slayer",
+            hint: "Un jeune garçon s’entraîne pour devenir pourfendeur de démons et sauver sa sœur."
+          },
+          {
+            mot: "Tokyo Revengers",
+            hint: "Un homme remonte le temps pour empêcher la tragique disparition de son ancienne petite amie."
+          },
+          {
+            mot: "JoJo's Bizarre Adventure",
+            hint: "Une saga familiale où chaque génération affronte des ennemis grâce à des pouvoirs spéciaux, appelés Stand."
+          },
+          {
+            mot: "Fairy Tail",
+            hint: "Les aventures d’une guilde de mages soudée et excentrique."
           },
       ]

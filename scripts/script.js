@@ -37,9 +37,9 @@ const gameOver = (isVictory) => {
   const modalText = isVictory ? `Vous avez trouvé le mot :` : "Le mot correct était :";
 
   gameModal.querySelector("img").src = `images/${
-    isVictory ? "victoire" : "perdu"
+    isVictory ? "victory" : "lost"
   }.gif`;
-
+  
   gameModal.querySelector("h4").innerText = isVictory
     ? "Félicitations!"
     : "Jeu terminé!";
