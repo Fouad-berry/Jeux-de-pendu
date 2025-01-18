@@ -96,10 +96,6 @@ const wordList = [
             hint: "Un homme remonte le temps pour empêcher la tragique disparition de son ancienne petite amie."
           },
           {
-            mot: "JoJo's Bizarre Adventure",
-            hint: "Une saga familiale où chaque génération affronte des ennemis grâce à des pouvoirs spéciaux, appelés Stand."
-          },
-          {
             mot: "Fairy Tail",
             hint: "Les aventures d’une guilde de mages soudée et excentrique."
           },
@@ -126,10 +122,6 @@ const wordList = [
             {
               word: "Master Chief",
               hint: "Super soldat et personnage principal de la série Halo."
-            },
-            {
-              word: "Pac-Man",
-              hint: "Personnage emblématique des jeux d’arcade qui mange des pac-gommes."
             },
             {
               word: "Lara Croft",
@@ -167,7 +159,6 @@ const wordList = [
               word: "Thanos",
               hint: "Titan fou cherchant à rassembler les Pierres d’Infinité."
             },
-            // ———————————— Naruto ————————————
 {
     word: "Naruto Uzumaki",
     hint: "Le ninja le plus imprévisible de Konoha, déterminé à devenir Hokage."
