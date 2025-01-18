@@ -49,30 +49,57 @@ const gameOver = (isVictory) => {
 };
 
 const initGame = (button, clickedLetter) => {
-    if (currentWord.includes(clickedLetter)) {
+    const lowerClickedLetter = clickedLetter.toLowerCase();
+    let letterFound = false;
+    let letterElems = wordDisplay.querySelectorAll("li");
+  
+    for (let i = 0; i < currentWord.length; i++) {
+      if (
+        currentWord[i].toLowerCase() === lowerClickedLetter &&
+        !letterElems[i].classList.contains("guessed")
+      ) {
+        letterElems[i].innerText = currentWord[i];
+        letterElems[i].classList.add("guessed");
+        correctLetters.push(currentWord[i]);
+  
+        letterFound = true;
+        break;
+      }
+    }
+  
+    if (letterFound) {
       button.classList.add("correct");
   
-      [...currentWord].forEach((letter, index) => {
-        if (letter === clickedLetter) {
-          correctLetters.push(letter);
-          wordDisplay.querySelectorAll("li")[index].innerText = letter;
-          wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
+      let stillHidden = false;
+      for (let i = 0; i < currentWord.length; i++) {
+        if (
+          currentWord[i].toLowerCase() === lowerClickedLetter &&
+          !letterElems[i].classList.contains("guessed")
+        ) {
+          stillHidden = true;
+          break;
         }
-      });
+      }
+      if (!stillHidden) {
+        button.disabled = true;
+      }
     } else {
       button.classList.add("wrong");
+      button.disabled = true;
       wrongGuessCount++;
       hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
     }
   
-    button.disabled = true;
-  
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
   
     if (wrongGuessCount === maxGuesses) return gameOver(false);
-    if (correctLetters.length === currentWord.length) return gameOver(true);
-  };
   
+    let revealedLettersCount = document.querySelectorAll(".word-display .guessed").length;
+    if (revealedLettersCount === currentWord.length) {
+      return gameOver(true);
+    }
+  };
+      
 for (let i = 97; i <= 122; i++) {
   const button = document.createElement("button");
   button.innerText = String.fromCharCode(i);

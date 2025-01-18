@@ -220,5 +220,21 @@ const wordList = [
   {
     word: "Gotou",
     hint: "Parasite fusionné avec plusieurs autres, formant un ennemi redoutable."
-  }
-      ]
+  },
+  {
+    word: "Yuji Itadori",
+    hint: "Le protagoniste énergique qui ingère un doigt maudit pour combattre les Fléaux."
+  },
+  {
+    word: "Megumi Fushiguro",
+    hint: "Utilisateur de shikigami capable d'invoquer des créatures surnaturelles."
+  },
+  {
+    word: "Nobara Kugisaki",
+    hint: "Ninja impétueuse et déterminée, experte dans l'usage de marteaux et clous."
+  },
+  {
+    word: "Satoru Gojo",
+    hint: "Professeur charismatique et extrêmement puissant, reconnu pour sa technique illimitée."
+  },
+]
