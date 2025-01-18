@@ -49,21 +49,40 @@ const gameOver = (isVictory) => {
 };
 
 const initGame = (button, clickedLetter) => {
-    const lowerClickedLetter = clickedLetter.toLowerCase();
+    // Fonction utilitaire pour normaliser une lettre (sans accents) et la mettre en minuscule
+    const normalizeLetter = letter =>
+      letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  
+    // On normalise la lettre cliquée
+    const lowerClickedLetter = normalizeLetter(clickedLetter);
     let letterFound = false;
     let letterElems = wordDisplay.querySelectorAll("li");
   
+    // Parcours du mot à deviner
     for (let i = 0; i < currentWord.length; i++) {
+      // Si le caractère est un espace, on l'affiche et on le marque comme déjà révélé
+      if (currentWord[i] === " ") {
+        letterElems[i].innerText = " ";
+        letterElems[i].classList.add("guessed");
+        continue;
+      }
+  
+      // Normalisation de la lettre actuelle du mot (pour ignorer les accents)
+      const normalizedCurrentLetter = normalizeLetter(currentWord[i]);
+  
+      // Vérification : si la lettre (normalisée) correspond à celle cliquée
+      // et que l'élément correspondant n'est pas déjà révélé
       if (
-        currentWord[i].toLowerCase() === lowerClickedLetter &&
+        normalizedCurrentLetter === lowerClickedLetter &&
         !letterElems[i].classList.contains("guessed")
       ) {
+        // On réaffiche la lettre originale (avec accent si besoin)
         letterElems[i].innerText = currentWord[i];
         letterElems[i].classList.add("guessed");
         correctLetters.push(currentWord[i]);
   
         letterFound = true;
-        break;
+        break; // On s'arrête après la première occurrence non dévoilée trouvée
       }
     }
   
@@ -72,8 +91,14 @@ const initGame = (button, clickedLetter) => {
   
       let stillHidden = false;
       for (let i = 0; i < currentWord.length; i++) {
+        // On ignore de nouveau les espaces
+        if (currentWord[i] === " ") {
+          continue;
+        }
+        // Normalisation de la lettre du mot
+        const normalizedCurrentLetter = normalizeLetter(currentWord[i]);
         if (
-          currentWord[i].toLowerCase() === lowerClickedLetter &&
+          normalizedCurrentLetter === lowerClickedLetter &&
           !letterElems[i].classList.contains("guessed")
         ) {
           stillHidden = true;
@@ -84,6 +109,7 @@ const initGame = (button, clickedLetter) => {
         button.disabled = true;
       }
     } else {
+      // Si aucune occurrence n'a été trouvée, c'est une erreur
       button.classList.add("wrong");
       button.disabled = true;
       wrongGuessCount++;
@@ -99,7 +125,7 @@ const initGame = (button, clickedLetter) => {
       return gameOver(true);
     }
   };
-      
+            
 for (let i = 97; i <= 122; i++) {
   const button = document.createElement("button");
   button.innerText = String.fromCharCode(i);
