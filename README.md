@@ -1,1 +1,1 @@
-La documentation et d'autres foncitonnalités arrivent !
+La documentation et d'autres foncitonnalitées arrivent !
