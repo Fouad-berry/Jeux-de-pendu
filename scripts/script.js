@@ -1,129 +1,145 @@
-const wordDisplay = document.querySelector(".word-display");
-const guessesText = document.querySelector(".guesses-text b");
-const keyboardDiv = document.querySelector(".keyboard");
-const hangmanImage = document.querySelector(".hangman-box img");
-const gameModal = document.querySelector(".game-modal");
-const playAgainBtn = gameModal.querySelector("button");
+// Cache des sélecteurs DOM
+const elements = {
+  wordDisplay: document.querySelector(".word-display"),
+  guessesText: document.querySelector(".guesses-text b"),
+  keyboardDiv: document.querySelector(".keyboard"),
+  hangmanImage: document.querySelector(".hangman-box img"),
+  gameModal: document.querySelector(".game-modal"),
+  hintText: document.querySelector(".hint-text b"),
+  playAgainBtn: document.querySelector(".game-modal button"),
+  modalImage: document.querySelector(".game-modal img"),
+  modalTitle: document.querySelector(".game-modal h4"),
+  modalText: document.querySelector(".game-modal p")
+};
 
-let currentWord, correctLetters, wrongGuessCount;
-const maxGuesses = 6;
+// Configuration du jeu
+const gameConfig = {
+  maxGuesses: 6,
+  keyboard: {
+    start: 97, // Code ASCII pour 'a'
+    end: 122   // Code ASCII pour 'z'
+  }
+};
+
+// État du jeu
+let gameState = {
+  currentWord: '',
+  correctLetters: new Set(),
+  wrongGuessCount: 0
+};
+
+// Fonction utilitaire pour normaliser les lettres (enlever les accents)
+const normalizeLetter = letter => letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 const resetGame = () => {
-  correctLetters = [];
-  wrongGuessCount = 0;
-  hangmanImage.src = "images/hangman-0.svg";
-  guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
+  gameState.correctLetters.clear();
+  gameState.wrongGuessCount = 0;
+  elements.hangmanImage.src = "images/hangman-0.svg";
+  elements.guessesText.innerText = `${gameState.wrongGuessCount} / ${gameConfig.maxGuesses}`;
 
-  wordDisplay.innerHTML = currentWord
+  elements.wordDisplay.innerHTML = gameState.currentWord
     .split("")
-    .map(() => `<li class="letter"></li>`)
+    .map(char => `<li class="letter">${char === ' ' ? ' ' : ''}</li>`)
     .join("");
 
-  keyboardDiv
+  elements.keyboardDiv
     .querySelectorAll("button")
-    .forEach((btn) => (btn.disabled = false));
+    .forEach(btn => {
+      btn.disabled = false;
+      btn.className = '';
+    });
 
-  gameModal.classList.remove("show");
+  elements.gameModal.classList.remove("show");
 };
 
 const getRandomWord = () => {
-  let randomEntry = wordList[Math.floor(Math.random() * wordList.length)];
-  currentWord = randomEntry.word || randomEntry.mot;
-  if (!currentWord) {
+  const randomEntry = wordList[Math.floor(Math.random() * wordList.length)];
+  gameState.currentWord = randomEntry.word || randomEntry.mot;
+  
+  if (!gameState.currentWord) {
     console.error("Le mot est indéfini. Vérifiez votre wordList.");
     return;
   }
-  document.querySelector(".hint-text b").innerText = randomEntry.hint;
+  
+  elements.hintText.innerText = randomEntry.hint;
   resetGame();
 };
 
 const gameOver = (isVictory) => {
-  const modalText = isVictory ? `Vous avez trouvé le mot :` : "Le mot correct était :";
+  const modalText = isVictory ? "Vous avez trouvé le mot :" : "Le mot correct était :";
+  
+  elements.modalImage.src = `images/${isVictory ? "victory" : "lost"}.gif`;
+  elements.modalTitle.innerText = isVictory ? "Félicitations!" : "Jeu terminé!";
+  elements.modalText.innerHTML = `${modalText} <b>${gameState.currentWord}</b>`;
+  elements.gameModal.classList.add("show");
+};
 
-  gameModal.querySelector("img").src = `images/${isVictory ? "victory" : "lost"}.gif`;
-  gameModal.querySelector("h4").innerText = isVictory ? "Félicitations!" : "Jeu terminé!";
-  gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
-  gameModal.classList.add("show");
+const checkWinCondition = () => {
+  const letterElems = elements.wordDisplay.querySelectorAll("li");
+  return Array.from(letterElems).every(elem => 
+    elem.classList.contains("guessed") || elem.textContent === " "
+  );
 };
 
 const initGame = (button, clickedLetter) => {
-  const normalizeLetter = letter =>
-    letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-  const lowerClickedLetter = normalizeLetter(clickedLetter);
+  const normalizedClickedLetter = normalizeLetter(clickedLetter);
+  const letterElems = elements.wordDisplay.querySelectorAll("li");
   let letterFound = false;
-  let letterElems = wordDisplay.querySelectorAll("li");
 
-  for (let i = 0; i < currentWord.length; i++) {
-    if (currentWord[i] === " ") {
-      letterElems[i].innerText = " ";
-      letterElems[i].classList.add("guessed");
-      continue;
+  // Vérifier toutes les occurrences de la lettre dans le mot
+  gameState.currentWord.split('').forEach((currentLetter, index) => {
+    if (currentLetter === " ") {
+      letterElems[index].innerText = " ";
+      letterElems[index].classList.add("guessed");
+      return;
     }
 
-    const normalizedCurrentLetter = normalizeLetter(currentWord[i]);
-    if (
-      normalizedCurrentLetter === lowerClickedLetter &&
-      !letterElems[i].classList.contains("guessed")
-    ) {
-      letterElems[i].innerText = currentWord[i];
-      letterElems[i].classList.add("guessed");
-      correctLetters.push(currentWord[i]);
-
+    if (normalizeLetter(currentLetter) === normalizedClickedLetter) {
+      letterElems[index].innerText = currentLetter;
+      letterElems[index].classList.add("guessed");
       letterFound = true;
-      break;
     }
-  }
+  });
 
   if (letterFound) {
     button.classList.add("correct");
-
-    let stillHidden = false;
-    for (let i = 0; i < currentWord.length; i++) {
-      if (currentWord[i] === " ") {
-        continue;
-      }
-      const normalizedCurrentLetter = normalizeLetter(currentWord[i]);
-      if (
-        normalizedCurrentLetter === lowerClickedLetter &&
-        !letterElems[i].classList.contains("guessed")
-      ) {
-        stillHidden = true;
-        break;
-      }
-    }
-    if (!stillHidden) {
-      button.disabled = true;
-    }
+    gameState.correctLetters.add(normalizedClickedLetter);
   } else {
     button.classList.add("wrong");
     button.disabled = true;
-    wrongGuessCount++;
-    hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
+    gameState.wrongGuessCount++;
+    elements.hangmanImage.src = `images/hangman-${gameState.wrongGuessCount}.svg`;
   }
 
-  guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
+  elements.guessesText.innerText = `${gameState.wrongGuessCount} / ${gameConfig.maxGuesses}`;
 
-  if (wrongGuessCount === maxGuesses) return gameOver(false);
+  if (gameState.wrongGuessCount === gameConfig.maxGuesses) {
+    return gameOver(false);
+  }
 
-  let revealedLettersCount = document.querySelectorAll(".word-display .guessed").length;
-  if (revealedLettersCount === currentWord.length) {
+  if (checkWinCondition()) {
     return gameOver(true);
   }
 };
 
-for (let i = 97; i <= 122; i++) {
-  const button = document.createElement("button");
-  button.innerText = String.fromCharCode(i);
-  keyboardDiv.appendChild(button);
-  button.addEventListener("click", (e) =>
-    initGame(e.target, String.fromCharCode(i))
-  );
-}
+// Création du clavier
+const createKeyboard = () => {
+  const fragment = document.createDocumentFragment();
+  
+  for (let i = gameConfig.keyboard.start; i <= gameConfig.keyboard.end; i++) {
+    const button = document.createElement("button");
+    const letter = String.fromCharCode(i);
+    button.innerText = letter;
+    button.addEventListener("click", e => initGame(e.target, letter));
+    fragment.appendChild(button);
+  }
+  
+  elements.keyboardDiv.appendChild(fragment);
+};
 
-playAgainBtn.addEventListener("click", () => {
-  gameModal.classList.remove("show");
-  getRandomWord();
-});
+// Initialisation des événements
+elements.playAgainBtn.addEventListener("click", getRandomWord);
 
+// Démarrage du jeu
+createKeyboard();
 getRandomWord();
